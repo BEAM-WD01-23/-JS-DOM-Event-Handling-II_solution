@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>custom-event solution</title>
+</head>
+<body>
+    <h1>Custom event</h1>
+    <h3>ex: 1</h3>
+    <button id="myBtn">custom-event</button>
+    <br>
+
+    <h3>ex: 2</h3>
+    <h2 id="showMessage"></h2>
+    <button id="submitBtn">submit</button>
+    
+
+
+
+
+    <!-- js solution ... -->
+    <script>
+        // 1
+        //
+            // const buttonClicked = new Event('buttonClicked');
+
+            // // add event listener to button
+            // const myBtn = document.getElementById('myBtn');
+            // myBtn.addEventListener('click', function () {
+            // // dispatch custom event
+            // myBtn.dispatchEvent(buttonClicked);
+            // });
+
+            // // listen for custom event
+            // const submitEventHandler = function () {
+            // alert('custom-event button clicked!');
+            // };
+            // myBtn.addEventListener('buttonClicked', submitEventHandler);
+            //
+            //2
+            //
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.addEventListener('submitButtonClicked', submitEventHandler);
+
+                function submitEventHandler(){ 
+                alert('Submit button clicked!');
+                };
+                // create custom event
+                const loginSuccessEvent = new CustomEvent('loginSuccess', {
+                detail: { username: 'Ahmed', salutation: 'Mr.' },
+                });
+                // Function to handle the loginSuccess event
+                function handleLoginSuccess(event) {
+                const myMessage = document.getElementById('showMessage');
+                const { username, salutation } = event.detail;
+                myMessage.innerHTML = `Welcome ${salutation} ${username}!`;
+                }
+
+                // Add an event listener to listen for the "loginSuccess" event
+                document.addEventListener('loginSuccess', handleLoginSuccess);
+
+                // Dispatch the loginSuccess event when the user successfully logs in
+                function loginUser() {
+                // Once the login is successful, dispatch the loginSuccess event
+                document.dispatchEvent(loginSuccessEvent);
+                }
+                // Example usage: Call the loginUser() function to simulate a successful login
+                loginUser();
+
+
+    </script>
+</body>
+</html>
